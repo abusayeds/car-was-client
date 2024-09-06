@@ -9,7 +9,7 @@ import { useState } from "react";
 import Toast from "../ulittls/Toast";
 import { RiAdminLine } from "react-icons/ri";
 import { CgProfile } from "react-icons/cg";
-import { FaBars } from "react-icons/fa";
+
 import { FaBarsStaggered } from "react-icons/fa6";
 
 const TopNavber = () => {
@@ -174,9 +174,27 @@ const TopNavber = () => {
           open ? "right-0 left-0 top-16" : " right-0 left-0 top-[-100%]"
         } flex flex-col justify-start items-center p-10 space-y-4 overflow-y-auto`}
       >
-        <NavLink onClick={() => setOpen(!open)} className= 'text-white text-lg '  to="/">Home</NavLink>
-        <NavLink onClick={() => setOpen(!open)} className= 'text-white text-lg '  to="/servise">Service</NavLink>
-        <NavLink onClick={() => setOpen(!open)} className= 'text-white text-lg '  to="/booking">Booking</NavLink>
+        <NavLink
+          onClick={() => setOpen(!open)}
+          className="text-white text-lg "
+          to="/"
+        >
+          Home
+        </NavLink>
+        <NavLink
+          onClick={() => setOpen(!open)}
+          className="text-white text-lg "
+          to="/servise"
+        >
+          Service
+        </NavLink>
+        <NavLink
+          onClick={() => setOpen(!open)}
+          className="text-white text-lg "
+          to="/booking"
+        >
+          Booking
+        </NavLink>
       </div>
     </section>
   );
