@@ -1,6 +1,7 @@
 import { Outlet, useLocation } from "react-router-dom";
 import TopNavber from "./components/navber/TopNavber";
 import { useState, useEffect } from "react";
+import Footer from "./components/footer/Footer";
 
 function App() {
   const [scrollColor, setScrollColor] = useState(false);
@@ -42,6 +43,7 @@ function App() {
       <div className="px-5 md:px-20">
         <Outlet />
       </div>
+      <Footer></Footer>
     </main>
   );
 }

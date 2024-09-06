@@ -9,20 +9,14 @@ import { useAppSelector } from "../../redux/hooks";
 import { useNavigate } from "react-router-dom";
 import Toast from "../../components/ulittls/Toast";
 import { useState } from "react";
-
+import { useServiseDetailsQuery } from "../../redux/features/servise/ServiseApi";
 
 const Booking = () => {
   const [toastMessage, setToastMessage] = useState<string | null>(null);
-
   const { user } = useAppSelector((state) => state.UserDetails);
-  
-  
-
-
- 
-
   const { booking } = useAppSelector((state) => state);
   const [addBooking] = useAddbookingMutation();
+  const { data: service } = useServiseDetailsQuery(booking?.service);
   const [updateSlot] = useUpdateSlotMutation();
   const { data } = useBookingQuery(booking.slotId);
   const navigate = useNavigate();
@@ -31,9 +25,10 @@ const Booking = () => {
     const form = event.target;
     const formData = {
       name: form.name.value,
-    
       phone: Number(form.phone.value),
       email: form.email.value,
+      price: service?.data?.price,
+      image: service?.data?.image,
       vehicleType: form.vehicleType.value,
       vehicleBrand: form.vehicleBrand.value,
       date: form.date.value,
@@ -102,6 +97,7 @@ const Booking = () => {
                 </p>
                 <p>{booking.date}</p>
               </div>
+              
               <p>{data?.data?.service?.description}</p>
             </div>
           )}
@@ -111,10 +107,8 @@ const Booking = () => {
               <p className="font-bold text-xl"> Service info </p>
             </div>
             <p className=" text-sm">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem
-              aliquid consequuntur fuga aut asperiores, culpa modi, nobis
-              laborum blanditiis, tenetur nihil. Veritatis eaque reiciendis
-              atque ea libero earum accusamus eum
+              A car service typically includes inspections, maintenance and/or
+              repairs to ensure that your car is running safely and efficiently
             </p>
           </div>
         </section>
@@ -267,15 +261,12 @@ const Booking = () => {
               <div>
                 <button
                   type="submit"
-                    className={`hover:shadow-form w-full rounded-md duration-500 ${
-                      booking.slotId === ''
-                        ? "opacity-40 cursor-not-allowed"
-                        : "opacity-90 hover:opacity-100"
-                    } bg-[#6A64F1] py-3 px-8 text-center text-base font-semibold text-white outline-none`}
-                   
-                  >
-                    
-                
+                  className={`hover:shadow-form w-full rounded-md duration-500 ${
+                    booking.slotId === ""
+                      ? "opacity-40 cursor-not-allowed"
+                      : "opacity-90 hover:opacity-100"
+                  } bg-[#6A64F1] py-3 px-8 text-center text-base font-semibold text-white outline-none`}
+                >
                   <span>Pay Now</span>
                 </button>
               </div>

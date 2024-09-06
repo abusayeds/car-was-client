@@ -88,6 +88,16 @@ const adminApi = baseApi.injectEndpoints({
       },
       invalidatesTags: ["slot"],
     }),
+    updateuser: builder.mutation({
+      query: (args) => {
+        return {
+          url: `/update-user/${args.id}`,
+          method: "PUT",
+          body: args.data,
+        };
+      },
+      invalidatesTags: ["booking"],
+    }),
     getAllBooking: builder.query({
       query: () => {
         return {
@@ -95,8 +105,8 @@ const adminApi = baseApi.injectEndpoints({
           method: "GET",
         };
       },
+      providesTags : ["booking"]
     }),
-  
   }),
 });
 
@@ -110,5 +120,5 @@ export const {
   useCreateslotMutation,
   useDeleteSlotMutation,
   useGetAllBookingQuery,
-
+  useUpdateuserMutation,
 } = adminApi;

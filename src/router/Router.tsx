@@ -13,6 +13,8 @@ import AdmiDashboard from "../pages/admin/AdmiDashboard";
 import ServiseManagement from "../pages/admin/ServiseManagement";
 import UserManagement from "../pages/admin/UserManagement";
 import SlotManagement from "../pages/admin/SlotManagement";
+import AccountInfo from "../pages/user/AccountInfo";
+import UserBooking from "../pages/user/UserBooking";
 
 const router = createBrowserRouter([
   {
@@ -66,6 +68,14 @@ const router = createBrowserRouter([
             }
         ]
         
+      },
+      {
+        path : 'userinfo',
+        element : <AccountInfo></AccountInfo>
+      },
+      {
+        path : 'my-bookings',
+        element : <UserBooking></UserBooking>
       },
       {
         path: "/success",

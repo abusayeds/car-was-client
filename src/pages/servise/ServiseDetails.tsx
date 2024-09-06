@@ -11,11 +11,12 @@ import { useAppDispatch } from "../../redux/hooks";
 import { booking } from "../../redux/features/booking/bookingSlice";
 import { Link } from "react-router-dom";
 export type TBookingData = {
-    slotId: string;
-    date: string;
-    startTime : string
-    endTime : string
-  }
+  slotId: string;
+  date: string;
+  startTime: string;
+  endTime: string;
+  service: string;
+};
 const ServiseDetails = () => {
   const [serviseId] = useState(() => {
     const savedRengeValue = localStorage.getItem("serviseDetailsId");
@@ -25,7 +26,7 @@ const ServiseDetails = () => {
     null
   );
   const dispatch = useAppDispatch();
-  const [bookingData, setBookingData] = useState<TBookingData | null>(null);
+  const [bookingData, setBookingData] = useState<any>(null);
 
   const { data } = useServiseDetailsQuery(serviseId);
   const { data: slots } = useSlotsQuery(serviseId);
@@ -121,12 +122,17 @@ const ServiseDetails = () => {
                   {slot.endTime}
                 </td>
                 <td
-                  className={`px-2 md:text-sm text-xs py-2 sm:px-4 sm:py-4 ${slot.isBooked === 'booked' && 'text-designColor font-bodyfont'} ${
+                  className={`px-2 md:text-sm text-xs py-2 sm:px-4 sm:py-4 ${
+                    slot.isBooked === "booked" &&
+                    "text-designColor font-bodyfont"
+                  } ${
                     selectedSlotIndex === index
                       ? "text-designColor font-bodyfont"
                       : ""
                   } `}
-                > {slot.isBooked}
+                >
+                  {" "}
+                  {slot.isBooked}
                   {/* {selectedSlotIndex === index ? "booked" : `${slot.isBooked}`} */}
                 </td>
                 <td className="px-2 md:text-sm text-xs py-2 sm:px-4 sm:py-4">
@@ -134,23 +140,29 @@ const ServiseDetails = () => {
                 </td>
                 <td className="md:text-sm text-xs py-2 sm:px-4 sm:py-4">
                   <button
-                  type="button"
-                    className={`bg-blue-600 rounded   md:px-4 p-2 text-center md:py-3 text-white ${slot.isBooked === 'booked' && "opacity-40 cursor-not-allowed hidden "} ${
+                    type="button"
+                    className={`bg-blue-600 rounded   md:px-4 p-2 text-center md:py-3 text-white ${
+                      slot.isBooked === "booked" &&
+                      "opacity-40 cursor-not-allowed hidden "
+                    } ${
                       selectedSlotIndex !== null && selectedSlotIndex !== index
                         ? "opacity-40 cursor-not-allowed "
                         : ""
-                    }` }
+                    }`}
                     onClick={() => {
                       handleBookingClick(index);
                       setBookingData({
-                        slotId: slot._id, 
+                        slotId: slot._id,
                         date: selectedDate.toLocaleDateString(),
-                        startTime : slot.startTime,
-                        endTime : slot.endTime
+                        startTime: slot.startTime,
+                        endTime: slot.endTime,
+                        service: slot.service,
                       });
                     }}
                     disabled={
-                      selectedSlotIndex !== null && selectedSlotIndex !== index && slot.isBooked === 'booked'
+                      selectedSlotIndex !== null &&
+                      selectedSlotIndex !== index &&
+                      slot.isBooked === "booked"
                     }
                   >
                     Booking

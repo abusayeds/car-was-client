@@ -5,13 +5,15 @@ interface BookingState {
   date: string;
   startTime :string
   endTime : string
+  service : string
 }
 
 const initialState: BookingState = {
   slotId: "",
   date: "",
   startTime : '',
-  endTime  : ''
+  endTime  : '',
+  service : ''
 };
 
 const bookingSlice = createSlice({
