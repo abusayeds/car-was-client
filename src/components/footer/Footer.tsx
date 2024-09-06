@@ -102,7 +102,7 @@ const Footer = () => {
             </div>
           </div>
           <div className="mb-5 flex flex-col gap-4 ">
-            <p className="font-semibold text-white">Get in Touch</p>
+            <p className="font-semibold text-white font-serif">Get in Touch</p>
 
             <div>
               <p>
