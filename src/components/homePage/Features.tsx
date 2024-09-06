@@ -38,7 +38,7 @@ const Features = () => {
                 onClick={() => serviseId(item._id)}
                 className="text-white bg-designColor px-4 py-2 rounded-full transform translate-y-20 transition-all duration-1000 ease-in-out group-hover:translate-y-0 group-hover:blur-none"
               >
-                View details
+                  View details
               </Link >
             </div>
           </div>
