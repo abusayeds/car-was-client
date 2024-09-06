@@ -55,7 +55,7 @@ const Footer = () => {
             </NavLink>
           </div>
           <div className="mb-5 flex flex-col gap-4 ">
-            <p className="  font-semibold text-white">My Services</p>
+            <p className="  font-semibold text-white font-serif">My Services</p>
             <div className=" flex flex-col gap-2">
               <li className="flex items-center">
                 <IoIosArrowForward className=" text-yellow-600 font-semibold "></IoIosArrowForward>
