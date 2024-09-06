@@ -5,7 +5,7 @@ import { useHomePageFeaturesQuery } from "../../redux/features/HomePageApi";
 const Features = () => {
   const { data, isLoading } = useHomePageFeaturesQuery(undefined);
   if (isLoading) {
-    return <p>Loading ...</p>;
+    return <span>Loading ...</span>;
   }
   const serviseId = (id : any) => {
     localStorage.setItem("serviseDetailsId", JSON.stringify(id));
