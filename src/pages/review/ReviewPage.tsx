@@ -38,7 +38,7 @@ const ReviewPage = () => {
           
           </div>
           <div>
-            <p className="md:text-xl text-sm">Avarage rating</p>
+            <p className="md:text-xl text-sm">Avarage rating </p>
             <p className=" font-bodyfont text-2xl mt-3 md:text-4xl"> {average}%</p>
            
           </div>
@@ -91,7 +91,7 @@ const ReviewPage = () => {
                 
                 <div className=" flex gap-4 items-center">
                   <button className=" text-xs uppercase px-2 py-1 bg-designColor opacity-70  hover:opacity-100 font-titlefont text-white duration-500 ">
-                    DElete review
+                    Delete review hhh
                   </button>
                   <button className=" text-2xl uppercase px-2 py-1  opacity-70  hover:opacity-100 font-titlefon text-blue-600  duration-500 ">
                     <FaHeart></FaHeart>

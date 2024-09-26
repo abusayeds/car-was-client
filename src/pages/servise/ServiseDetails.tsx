@@ -133,10 +133,9 @@ const ServiseDetails = () => {
                 >
                   {" "}
                   {slot.isBooked}
-                  {/* {selectedSlotIndex === index ? "booked" : `${slot.isBooked}`} */}
                 </td>
                 <td className="px-2 md:text-sm text-xs py-2 sm:px-4 sm:py-4">
-                  {selectedDate.toLocaleDateString()}
+                  {selectedDate.toLocaleDateString()}.
                 </td>
                 <td className="md:text-sm text-xs py-2 sm:px-4 sm:py-4">
                   <button

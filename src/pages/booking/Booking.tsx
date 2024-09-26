@@ -25,17 +25,18 @@ const Booking = () => {
       name: form.name.value,
       phone: Number(form.phone.value),
       email: form.email.value,
-      slotId :booking.slotId,
+      slotId: booking.slotId,
       price: service?.data?.price,
       image: service?.data?.image,
       vehicleType: form.vehicleType.value,
       vehicleBrand: form.vehicleBrand.value,
       date: form.date.value,
+      startTime: booking.startTime,
+      endTime: booking.endTime,
       time: form.time.value,
       address: form.address.value,
       city: form.city.value,
     };
-    
 
     try {
       const res: any = await addBooking(formData);
@@ -46,7 +47,6 @@ const Booking = () => {
       } else {
         setToastMessage(" Booking successful!");
         window.location.href = res?.data?.data?.paymentSession?.payment_url;
-       
 
         form.reset();
       }
@@ -133,7 +133,7 @@ const Booking = () => {
                 <input
                   type="text"
                   name="phone"
-                  defaultValue="01846464859"
+              
                   id="phone"
                   placeholder="Enter your phone no"
                   className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
@@ -193,7 +193,6 @@ const Booking = () => {
                       className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                       name="vehicleType"
                     >
-                   
                       <option selected>Defult</option>
                       <option value="car">car</option>
                       <option value="truck">truck</option>
@@ -233,7 +232,7 @@ const Booking = () => {
                     </label>
                     <input
                       name="address"
-                      defaultValue="dfg"
+                     
                       placeholder="Your address"
                       id="address"
                       className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
@@ -248,7 +247,6 @@ const Booking = () => {
                     <input
                       type="text"
                       name="city"
-                      defaultValue="dg"
                       placeholder="City"
                       id="city"
                       className="w-full  rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
