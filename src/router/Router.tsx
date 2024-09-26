@@ -7,7 +7,8 @@ import ReviewPage from "../pages/review/ReviewPage";
 import Servise from "../pages/servise/Servise";
 import ServiseDetails from "../pages/servise/ServiseDetails";
 import Booking from "../pages/booking/Booking";
-import Success from "../pages/Success";
+
+import Failed from "../pages/Failed";
 import ErrorPage from "../pages/ErrorPage";
 import AdmiDashboard from "../pages/admin/AdmiDashboard";
 import ServiseManagement from "../pages/admin/ServiseManagement";
@@ -53,41 +54,41 @@ const router = createBrowserRouter([
       {
         path: "/admin-dashboard",
         element: <AdmiDashboard></AdmiDashboard>,
-        children : [
-            {
-                path : '',
-                element : <ServiseManagement></ServiseManagement>
-            },
-            {
-                path : 'user-management',
-                element : <UserManagement></UserManagement>
-            },
-            {
-                path : 'slot-management',
-                element : <SlotManagement></SlotManagement>
-            }
-        ]
-        
+        children: [
+          {
+            path: "",
+            element: <ServiseManagement></ServiseManagement>,
+          },
+          {
+            path: "user-management",
+            element: <UserManagement></UserManagement>,
+          },
+          {
+            path: "slot-management",
+            element: <SlotManagement></SlotManagement>,
+          },
+        ],
       },
       {
-        path : 'userinfo',
-        element : <AccountInfo></AccountInfo>
+        path: "userinfo",
+        element: <AccountInfo></AccountInfo>,
       },
       {
-        path : 'my-bookings',
-        element : <UserBooking></UserBooking>
+        path: "my-bookings",
+        element: <UserBooking></UserBooking>,
       },
+      
       {
-        path: "/success",
-        element: <Success></Success>,
+        path: "/failed",
+        element: <Failed></Failed>,
       },
+
       {
-        path : '*',
-        element : <ErrorPage></ErrorPage>
+        path: "*",
+        element: <ErrorPage></ErrorPage>,
       },
     ],
   },
- 
 ]);
 
 export default router;

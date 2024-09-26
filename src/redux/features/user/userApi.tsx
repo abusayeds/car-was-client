@@ -20,7 +20,7 @@ const userApi = baseApi.injectEndpoints({
           method: "GET",
         };
       },
-      providesTags: ["booking"],
+      providesTags: ["user"],
     }),
   }),
 });

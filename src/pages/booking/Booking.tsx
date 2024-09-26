@@ -3,10 +3,9 @@ import { MdTimer } from "react-icons/md";
 import {
   useAddbookingMutation,
   useBookingQuery,
-  useUpdateSlotMutation,
 } from "../../redux/features/booking/bookingApi";
 import { useAppSelector } from "../../redux/hooks";
-import { useNavigate } from "react-router-dom";
+
 import Toast from "../../components/ulittls/Toast";
 import { useState } from "react";
 import { useServiseDetailsQuery } from "../../redux/features/servise/ServiseApi";
@@ -17,9 +16,8 @@ const Booking = () => {
   const { booking } = useAppSelector((state) => state);
   const [addBooking] = useAddbookingMutation();
   const { data: service } = useServiseDetailsQuery(booking?.service);
-  const [updateSlot] = useUpdateSlotMutation();
+
   const { data } = useBookingQuery(booking.slotId);
-  const navigate = useNavigate();
   const handleSubmit = async (event: any) => {
     event.preventDefault();
     const form = event.target;
@@ -27,6 +25,7 @@ const Booking = () => {
       name: form.name.value,
       phone: Number(form.phone.value),
       email: form.email.value,
+      slotId :booking.slotId,
       price: service?.data?.price,
       image: service?.data?.image,
       vehicleType: form.vehicleType.value,
@@ -36,23 +35,19 @@ const Booking = () => {
       address: form.address.value,
       city: form.city.value,
     };
-    const data = {
-      isBooked: "booked",
-    };
-    const args = {
-      id: booking.slotId,
-      data: data,
-    };
+    
 
     try {
       const res: any = await addBooking(formData);
+      console.log(res?.data.data?.verifyPaymentMethod?.pay_status);
 
       if (res.error) {
         setToastMessage(res.error.data.errorSources[0].message);
       } else {
         setToastMessage(" Booking successful!");
-        await updateSlot(args);
-        navigate("/success");
+        window.location.href = res?.data?.data?.paymentSession?.payment_url;
+       
+
         form.reset();
       }
     } catch {
@@ -76,7 +71,7 @@ const Booking = () => {
         <p className=" font-serif text-4xl"> Your are almost down ! </p>
       )}
 
-      <section className="md:flex mt-4 border-t pt-2 ">
+      <section className="md:flex  border-t pt-5 ">
         <section className="md:w-1/2 w-full flex flex-col gap-4 font-titlefont">
           {booking.slotId === "" ? (
             <p className="text-2xl text-designColor font-bodyfont">
@@ -97,7 +92,7 @@ const Booking = () => {
                 </p>
                 <p>{booking.date}</p>
               </div>
-              
+
               <p>{data?.data?.service?.description}</p>
             </div>
           )}
@@ -112,7 +107,7 @@ const Booking = () => {
             </p>
           </div>
         </section>
-        <section className="md:w-1/2 w-full md:mt-0 mt-5">
+        <section className="md:w-1/2 w-full md:mt-0 mt-5 md:px-6">
           <div className="flex items-center justify-center ">
             <form
               onSubmit={handleSubmit}
@@ -138,6 +133,7 @@ const Booking = () => {
                 <input
                   type="text"
                   name="phone"
+                  defaultValue="01846464859"
                   id="phone"
                   placeholder="Enter your phone no"
                   className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
@@ -197,7 +193,7 @@ const Booking = () => {
                       className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                       name="vehicleType"
                     >
-                      {" "}
+                   
                       <option selected>Defult</option>
                       <option value="car">car</option>
                       <option value="truck">truck</option>
@@ -218,6 +214,7 @@ const Booking = () => {
                     </label>
                     <input
                       name="vehicleBrand"
+                      defaultValue="100"
                       placeholder="vehicleBrand"
                       id="vehicleBrand"
                       className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
@@ -236,6 +233,7 @@ const Booking = () => {
                     </label>
                     <input
                       name="address"
+                      defaultValue="dfg"
                       placeholder="Your address"
                       id="address"
                       className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
@@ -250,6 +248,7 @@ const Booking = () => {
                     <input
                       type="text"
                       name="city"
+                      defaultValue="dg"
                       placeholder="City"
                       id="city"
                       className="w-full  rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"

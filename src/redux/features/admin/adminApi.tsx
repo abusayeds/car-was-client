@@ -96,7 +96,7 @@ const adminApi = baseApi.injectEndpoints({
           body: args.data,
         };
       },
-      invalidatesTags: ["booking"],
+      invalidatesTags: ["user"],
     }),
     getAllBooking: builder.query({
       query: () => {
