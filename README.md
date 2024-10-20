@@ -1,8 +1,5 @@
-
+**LINK link** https://car-was-client.vercel.app/
 ****Project Overview video link**** https://www.loom.com/share/99210d1cf1ba49e3b81d6c7cabc4075e?sid=ab478d94-4f1e-41e7-af36-3326d4e398de
-
-
-
 **Overview**
  * Links to essential sections such as Services, Booking, and Login, providing quick access to users.
  * Includes an input field for feedback, a star-based rating system (1-5 stars), and an engaging design inspired by platforms like Dribble and Pinterest. Post-submission, the site’s average rating and two recent reviews are displayed, along with a "See All Reviews" button
