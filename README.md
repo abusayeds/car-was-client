@@ -21,7 +21,9 @@ The Main Dashboard serves as the central hub of the system, providing access to 
 ![Main Page](https://i.ibb.co/h9GcRJG/home-page.png)
 
 **Sign-Up && Login Page**
+
 *Sign-Up Page: A form allowing users to register with fields like name, email, password, phone number, and address. All users default to a "USER" role, with admin promotion functionality available.
+
 * Login Page: A simple form with email and password fields, supporting token-based authentication and displaying relevant success or error messages.
 **![sign up and login page](https://i.ibb.co/v3g16wq/login-or-singup.png)
 
@@ -31,8 +33,10 @@ Payment Processing: A "Pay Now" button redirects users to AAMARPAY for payment, 
 ![Booking && Payment Page](https://i.ibb.co/XZDb6yk/payment-and-booking.png)
 
 **User && Admin Dashboard**
+
 *Admin Dashboard:
 Service Management: Admin can view all services in a tabular format. They can add, update, or delete services through modals and confirmations, with real-time updates for an enhanced experience.
+
 * User Dashboard:
 Bookings Overview: Shows past and upcoming bookings. Upcoming bookings are displayed in card format with a countdown timer for the next service.
 Service Slot Countdown: Displays a countdown timer for upcoming booked slots, both in the navbar for the immediate next slot and on individual booking cards for each slot in the "Upcoming Bookings" section
