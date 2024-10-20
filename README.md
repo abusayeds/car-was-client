@@ -1,15 +1,24 @@
 
-****Face Recognition Attendance System****
+****Project Overview video****
 
 https://github.com/MdNadeemSarwar/Face-Recognition-Attendance-System/assets/107212111/f60d67a4-9a12-42c6-9166-3e456cccc982
 
 **Overview**
-The Face Recognition Attendance System is a software application designed to automate the attendance tracking process using facial recognition technology. 
-This system allows users to easily record attendance by capturing and analyzing facial features, eliminating the need for manual attendance tracking methods.
-
-**Main Dashboard**
+ * Links to essential sections such as Services, Booking, and Login, providing quick access to users.
+ * Includes an input field for feedback, a star-based rating system (1-5 stars), and an engaging design inspired by platforms like Dribble and Pinterest. Post-submission, the site’s average rating and two recent reviews are displayed, along with a "See All Reviews" button
+ * A form allowing users to register with fields like name, email, password, phone number, and address. All users default to a "USER" role, with admin promotion functionality available
+ * A simple form with email and password fields, supporting token-based authentication and displaying relevant success or error message
+ * All available car wash services are displayed with descriptions, prices, and durations. Users can search, filter, and sort services based on criteria like price and duration
+ * Detailed information about the selected service is displayed, with available time slots shown by default.
+ * A "Book This Service" button appears after selecting a time slot.
+ * Admin can view all services in a tabular format. They can add, update, or delete services through modals and confirmations, with real-time updates for an enhanced experience.
+ * Shows past and upcoming bookings. Upcoming bookings are displayed in card format with a countdown timer for the next service.
+ 
+**Home Page**
+*Hero Section: A visually appealing introduction with branding messages and a call-to-action button to book services, leading to the Services page.
+*Review Section: Includes an input field for feedback, a star-based rating system (1-5 stars), and an engaging design inspired by platforms like Dribble and Pinterest. Post-submission, the site’s average rating and two recent reviews are displayed, along with a "See All Reviews" button.
 The Main Dashboard serves as the central hub of the system, providing access to various functionalities and sections through intuitive buttons:
-![Main Page](https://github.com/MdNadeemSarwar/Face-Recognition-Attendance-System/assets/107212111/19a7776c-c1a6-4934-a7ae-cc9d8a3316c2)
+![Main Page](https://i.ibb.co/h9GcRJG/home-page.png)
 
 **Student Management System**
 The Student Management System component facilitates the management of student records, including personal information, enrollment details, and course registrations. It provides functionalities such as adding new students, updating existing records, and generating student ID cards.
