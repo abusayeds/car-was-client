@@ -28,17 +28,15 @@ The Main Dashboard serves as the central hub of the system, providing access to 
 **![sign up and login page](https://i.ibb.co/v3g16wq/login-or-singup.png)
 
  **Booking && Payment Page **
-Booking Summary: Displays the selected service and time slot on the left, with a user information form on the right.
+ Displays the selected service and time slot on the left, with a user information form on the right.
 Payment Processing: A "Pay Now" button redirects users to AAMARPAY for payment, and after successful payment, the booking is confirmed, and the user is redirected to a success page.
 ![Booking && Payment Page](https://i.ibb.co/XZDb6yk/payment-and-booking.png)
 
 **User && Admin Dashboard**
 
-*Admin Dashboard:
-Service Management: Admin can view all services in a tabular format. They can add, update, or delete services through modals and confirmations, with real-time updates for an enhanced experience.
+*Admin Dashboard: Admin can view all services in a tabular format. They can add, update, or delete services through modals and confirmations, with real-time updates for an enhanced experience.
 
-* User Dashboard:
-Bookings Overview: Shows past and upcoming bookings. Upcoming bookings are displayed in card format with a countdown timer for the next service.
+* User Dashboard: Shows past and upcoming bookings. Upcoming bookings are displayed in card format with a countdown timer for the next service.
 Service Slot Countdown: Displays a countdown timer for upcoming booked slots, both in the navbar for the immediate next slot and on individual booking cards for each slot in the "Upcoming Bookings" section
 
 ![User && Admin Dashboard](https://i.ibb.co/4FSsD0C/admin-or-user-dashboard.png)
