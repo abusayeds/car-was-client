@@ -1,7 +1,7 @@
 
-****Project Overview video****
+****Project Overview video link**** https://www.loom.com/share/99210d1cf1ba49e3b81d6c7cabc4075e?sid=ab478d94-4f1e-41e7-af36-3326d4e398de
 
-https://github.com/MdNadeemSarwar/Face-Recognition-Attendance-System/assets/107212111/f60d67a4-9a12-42c6-9166-3e456cccc982
+
 
 **Overview**
  * Links to essential sections such as Services, Booking, and Login, providing quick access to users.
