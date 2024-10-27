@@ -1,22 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState } from "react";
-import Toast from "../../components/ulittls/Toast";
+
 import { useAppSelector } from "../../redux/hooks";
 import { useUpdateuserMutation } from "../../redux/features/admin/adminApi";
-const ProfileUpdateModel = ({ data, onClose }: any) => {
+import { useState } from "react";
+import Toast from "../../components/ulittls/Toast";
+const ProfileUpdateModel = ({ data }: any) => {
   const { user } = useAppSelector((state) => state.UserDetails);
   const [updateUser] = useUpdateuserMutation();
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const { singleUser } = data;
-
-  if (!data.openProfileUpdateModel) {
-    return null;
-  }
-
-  const handleCloseToast = () => {
-    setToastMessage(null);
-    onClose(false);
-  };
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
@@ -38,36 +30,37 @@ const ProfileUpdateModel = ({ data, onClose }: any) => {
       if (res.error) {
         setToastMessage(res?.error?.data?.errorSources[0].message);
         console.log();
-        
       } else {
         setToastMessage("Profile update successfully");
         form.reset();
-     
       }
+      console.log(res);
     } catch {
       setToastMessage("Something went wrong");
       form.reset();
     }
   };
+  const handleCloseToast = () => {
+    setToastMessage(null);
+  };
   return (
-    <div className="">
-      {/* Toast Component */}
+    <div className=" w-full">
       {toastMessage && (
         <Toast message={toastMessage} onClose={() => handleCloseToast()} />
       )}
       <>
         <form
           onSubmit={handleSubmit}
-          className="j flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none "
+          className=" flex  outline-none focus:outline-none "
         >
-          <div className="relative w-auto my-20 mx-auto max-w-3xl">
-            {/*content*/}
-            <div className="border-0 rounded-lg shadow-lg relative flex flex-col   md:w-[500px]  bg-slate-200 outline-none focus:outline-none">
-              {/*header*/}
+          <div className=" min-w-full">
+            <div className="border-0 rounded-lg shadow-lg  flex flex-col     outline-none focus:outline-none">
               <div className="flex items-start justify-between p-4 border-b border-solid border-blueGray-200 rounded-t">
-                <h3 className="text-3xl font-bodyfont">Update Your Profile</h3>
+                <h3 className="md:            text-3xl font-bodyfont">
+                  Update Your Profile
+                </h3>
               </div>
-              {/*body*/}
+
               <div className=" w-full max-w-[550px] mx-auto bg-white">
                 <div>
                   <div className=" text-start px-4 py-2">
@@ -110,23 +103,15 @@ const ProfileUpdateModel = ({ data, onClose }: any) => {
               </div>
               {/*footer*/}
               <div className="flex items-center justify-end p-2 border-t border-solid border-blueGray-200 rounded-b">
-                <button
-                  onClick={() => onClose()}
-                  className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                  type="button"
-                >
-                  Close
-                </button>
                 <input
                   className=" bg-green-600 opacity-90 hover:opacity-100 text-white px-4 py-2 rounded-sm"
                   type="submit"
-                  value="Update Service"
+                  value="Update User"
                 />
               </div>
             </div>
           </div>
         </form>
-        <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
       </>
     </div>
   );

@@ -2,7 +2,6 @@
 import { useEffect, useState, useMemo } from "react";
 import { useUserBookingsQuery } from "../../redux/features/user/userApi";
 
-
 interface CountTimeEvent {
   date: string;
   startTime: string;
@@ -38,19 +37,18 @@ const Count = () => {
   }, [userBookings]);
 
   const [currentEventIndex, setCurrentEventIndex] = useState<number>(0);
-
-  const [date, setDate] = useState<string>("");
-  const [hours, setHours] = useState<string>("");
-  const [minutes, setMinutes] = useState<string>("");
-  const [second, setSecond] = useState<string>("");
+  const [date, setDate] = useState<string>("0");
+  const [hours, setHours] = useState<string>("0");
+  const [minutes, setMinutes] = useState<string>("0");
+  const [second, setSecond] = useState<string>("0");
 
   useEffect(() => {
     const calculateCountdown = () => {
       const now = new Date();
       const event = CountTime[currentEventIndex];
 
-      if (!event) {
-        return;
+      if (!event || !event.date || !event.startTime) {
+        return; // No valid event found
       }
 
       const eventDateTime = new Date(
@@ -61,17 +59,21 @@ const Count = () => {
       if (timeDifference <= 0) {
         if (currentEventIndex < CountTime.length - 1) {
           setCurrentEventIndex(currentEventIndex + 1);
+          setDate("0");
+          setHours("0");
+          setMinutes("0");
+          setSecond("0");
         }
       } else {
         const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
         const hours = Math.floor((timeDifference / (1000 * 60 * 60)) % 24);
         const minutes = Math.floor((timeDifference / (1000 * 60)) % 60);
         const seconds = Math.floor((timeDifference / 1000) % 60);
-     
-        setDate(`${days}`);
-        setHours(`${hours}`);
-        setMinutes(`${minutes}`);
-        setSecond(`${seconds}`);
+
+        setDate(String(days));
+        setHours(String(hours));
+        setMinutes(String(minutes));
+        setSecond(String(seconds));
       }
     };
 
@@ -84,21 +86,30 @@ const Count = () => {
     return () => clearInterval(interval);
   }, [currentEventIndex, CountTime]);
 
-
-  if(second === '' ) {
-    return null
+  if (second === "0" && hours === "0" && minutes === "0" && date === "0") {
+    return null; // Don't render anything if the countdown is zero
   }
-  console.log(second);
-  
+
   return (
     <div>
-      <h2 className="  text-designColor text-xs">Upcoming </h2>
+      <h2 className="text-designColor text-xs">Upcoming</h2>
       {currentEventIndex < CountTime.length && (
-        <div className=" flex md:gap-2 gap-1">
-          <p className="  font-titlefont font-semibold  text-xs">{date}<span>d</span></p>
-          <p className="  font-titlefont font-semibold  text-xs">{hours}<span>h</span></p>
-          <p className="  font-titlefont font-semibold  text-xs">{minutes}<span>m</span> </p>
-          <p className="  font-titlefont font-semibold w-8  text-xs">{second} <span>s</span></p>
+        <div className="flex md:gap-2 gap-1">
+          <p className="font-titlefont font-semibold text-xs">
+            {date}
+            <span>d</span>
+          </p>
+          <p className="font-titlefont font-semibold text-xs">
+            {hours}
+            <span>h</span>
+          </p>
+          <p className="font-titlefont font-semibold text-xs">
+            {minutes}
+            <span>m</span>
+          </p>
+          <p className="font-titlefont font-semibold w-8 text-xs">
+            {second} <span>s</span>
+          </p>
         </div>
       )}
     </div>

@@ -52,6 +52,7 @@ const SlotManagement = () => {
   return (
     <div className="relative flex flex-col font-titlefont   overflow-scroll text-gray-700 bg-white shadow-md rounded-lg bg-clip-border">
       {/* Toast Component */}
+      <p className="  text-lg py-4">Slot Management</p>
       {toastMessage && (
         <Toast message={toastMessage} onClose={() => handleCloseToast()} />
       )}
@@ -137,7 +138,10 @@ const SlotManagement = () => {
 
               <td className="p-4 gap-4">
                 <button
-                  onClick={() => {handleUpdate(service._id); setSlotStatus('')}}
+                  onClick={() => {
+                    handleUpdate(service._id);
+                    setSlotStatus("");
+                  }}
                   className={`px-2 rounded text-white  bg-blue-600 duration-500  py-1 ${
                     slotStatus[index] === "available" ||
                     slotStatus[index] === "booked" ||

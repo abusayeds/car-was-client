@@ -5,10 +5,9 @@ import AddServiseModal from "./AddServiseModal";
 import UpdateModel from "./UpdateModel";
 import DeleteModel from "./DeleteModel";
 
-
 const ServiseManagement = () => {
-  const { data , isLoading} = useAdminServiseQuery(undefined);
-  
+  const { data, isLoading } = useAdminServiseQuery(undefined);
+
   const [openServiceModal, setOpenServiceModel] = useState(false);
   const [OpenUpdateServiceModal, setOpenUpdateServiceModel] = useState(false);
   const [updateModelData, setUpdateModelData] = useState();
@@ -34,11 +33,12 @@ const ServiseManagement = () => {
   };
   const deleleModelData = {
     opendeleteServiceModal,
-    deleteModelId
+    deleteModelId,
   };
 
   return (
     <div className="relative flex flex-col font-titlefont   overflow-scroll text-gray-700 bg-white shadow-md rounded-lg bg-clip-border">
+      <p className="  text-lg py-4">Service Management</p>
       <AddServiseModal
         data={ServiceModaldata}
         onClose={hendleServiseModelClose}
@@ -47,12 +47,13 @@ const ServiseManagement = () => {
         update={updateData}
         onClose={hendleUpdateServiseModelClose}
       ></UpdateModel>
-      <DeleteModel deleteData= {deleleModelData} onClose = {hendleDeleteServiseModelClose}></DeleteModel>
+      <DeleteModel
+        deleteData={deleleModelData}
+        onClose={hendleDeleteServiseModelClose}
+      ></DeleteModel>
       <table className="  table-auto min-w-max text-slate-800">
-        {
-         isLoading && <p className="p-4">Loading...</p>
-        }
-        
+        {isLoading && <p className="p-4">Loading...</p>}
+
         <thead>
           <tr className="text-slate-800 border-b border-slate-300 bg-slate-300 ">
             <th className="p-4">
@@ -106,7 +107,13 @@ const ServiseManagement = () => {
                 >
                   Edit
                 </button>
-                <button onClick={() => { setOpenDeleteServiceModel(true); setDeleteModelId(service._id)}} className=" ml-4 bg-designColor px-8 rounded text-white opacity-80 hover:opacity-100 duration-500 py-1">
+                <button
+                  onClick={() => {
+                    setOpenDeleteServiceModel(true);
+                    setDeleteModelId(service._id);
+                  }}
+                  className=" ml-4 bg-designColor px-8 rounded text-white opacity-80 hover:opacity-100 duration-500 py-1"
+                >
                   Delete
                 </button>
               </td>

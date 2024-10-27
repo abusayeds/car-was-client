@@ -35,14 +35,14 @@ const UserBooking = () => {
               <div className="flex border rounded-lg bg-white ">
                 <img
                   className="m-2 h-24 w-28 rounded-md border object-cover object-center"
-                  src={item.image}
+                  src={item?.image}
                   alt=""
                 />
                 <div className="flex w-full flex-col px-4 py-4">
                   <span className="float-right text-gray-400">
-                    42EU - 8.5US
+                    {item?.name}
                   </span>
-                  <p className="mt-auto text-lg font-bold">${item.price}</p>
+                  <p className="mt-auto text-lg font-bold">${item?.price}</p>
                 </div>
               </div>
             ))}

@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import { baseApi } from "./api/baseApi";
 import loginReducer from "./features/authantication/AuthenticationSlice";
 import bookigReducer from "./features/booking/bookingSlice";
+import footerReducer from "./features/footer/Footer-slice";
 import {
   persistStore,
   persistReducer,
@@ -24,6 +25,7 @@ export const store = configureStore({
     [baseApi.reducerPath]: baseApi.reducer,
     UserDetails: persistedAuthReducer,
     booking: bookigReducer,
+    footer: footerReducer,
   },
   middleware: (getDefaultMiddlewares) =>
     getDefaultMiddlewares({

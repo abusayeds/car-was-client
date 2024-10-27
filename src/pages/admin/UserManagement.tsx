@@ -1,15 +1,20 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { useState } from "react";
-import { useGetAllBookingQuery, useUpdateuserMutation } from "../../redux/features/admin/adminApi";
+import {
+  useGetAllBookingQuery,
+  useUpdateuserMutation,
+} from "../../redux/features/admin/adminApi";
 import Toast from "../../components/ulittls/Toast";
 
 const UserManagement = () => {
   const { data } = useGetAllBookingQuery(undefined);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [role, setRole] = useState<any>(false);
-  const [selectedBookingId, setSelectedBookingId] = useState<string | null>(null);
-  const [updateUserRole] = useUpdateuserMutation()
+  const [selectedBookingId, setSelectedBookingId] = useState<string | null>(
+    null
+  );
+  const [updateUserRole] = useUpdateuserMutation();
   const handleRoleChange = (e: any, bookingId: string) => {
     setRole({
       data: e.target.value,
@@ -19,14 +24,12 @@ const UserManagement = () => {
     setSelectedBookingId(bookingId);
   };
 
-
-  
   const handleupdate = async () => {
-    const data ={
-        role : role.data
-      }
+    const data = {
+      role: role.data,
+    };
     const args = {
-      data:data,
+      data: data,
       id: role.id,
     };
     console.log(args);
@@ -44,14 +47,12 @@ const UserManagement = () => {
     }
   };
 
-
-
-    
   const handleCloseToast = () => {
     setToastMessage(null);
   };
   return (
     <main>
+      <p className="  text-lg py-4">User Management</p>
       <div className="relative overflow-x-auto font-titlefont">
         {toastMessage && (
           <Toast message={toastMessage} onClose={() => handleCloseToast()} />
@@ -95,24 +96,47 @@ const UserManagement = () => {
                 <td className="px-6 py-4">{booking?.date}</td>
                 <td className="px-6 py-4">{booking?.time}</td>
                 <select
-                onChange={(e) => handleRoleChange(e, booking.user._id)}
-                className="border my-4 p-2 rounded-lg outline-none"
-                disabled={!!selectedBookingId && selectedBookingId !== booking.user._id}
-              >
-                <option selected disabled>
-                  {booking?.user?.role}
-                </option>
-                <option value="admin">admin</option>
-                <option value="user">user</option>
-              </select>
+                  onChange={(e) => handleRoleChange(e, booking.user._id)}
+                  className="border my-4 p-2 rounded-lg outline-none"
+                  disabled={
+                    !!selectedBookingId &&
+                    selectedBookingId !== booking?.user?._id
+                  }
+                >
+                  <option selected disabled>
+                    {booking?.user?.role}
+                  </option>
+                  <option value="admin">admin</option>
+                  <option value="user">user</option>
+                </select>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
-      <div className={` ${role === false && " hidden" }  opacity-80 mt-5 flex items-end gap-6 justify-end`}>
-        <button onClick={() => {setSelectedBookingId(null) ; setRole(false)} } className="  opacity-90 px-6 py-1 font-titlefont rounded-lg  text-white  hover:opacity-100 bg-designColor">close</button>
-        <button onClick={() => {handleupdate() ; setRole(false)}} className="  opacity-80 px-6 py-1 font-titlefont  rounded-lg text-white  hover:opacity-100 bg-green-600">update</button>
+      <div
+        className={` ${
+          role === false && " hidden"
+        }  opacity-80 mt-5 flex items-end gap-6 justify-end`}
+      >
+        <button
+          onClick={() => {
+            setSelectedBookingId(null);
+            setRole(false);
+          }}
+          className="  opacity-90 px-6 py-1 font-titlefont rounded-lg  text-white  hover:opacity-100 bg-designColor"
+        >
+          close
+        </button>
+        <button
+          onClick={() => {
+            handleupdate();
+            setRole(false);
+          }}
+          className="  opacity-80 px-6 py-1 font-titlefont  rounded-lg text-white  hover:opacity-100 bg-green-600"
+        >
+          update
+        </button>
       </div>
     </main>
   );

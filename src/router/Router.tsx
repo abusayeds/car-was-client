@@ -16,6 +16,8 @@ import UserManagement from "../pages/admin/UserManagement";
 import SlotManagement from "../pages/admin/SlotManagement";
 import AccountInfo from "../pages/user/AccountInfo";
 import UserBooking from "../pages/user/UserBooking";
+import About from "../pages/about/About";
+import PrivateRouter from "./PrivateRoute";
 
 const router = createBrowserRouter([
   {
@@ -49,7 +51,15 @@ const router = createBrowserRouter([
       },
       {
         path: "/booking",
-        element: <Booking></Booking>,
+        element: (
+          <PrivateRouter>
+            <Booking></Booking>
+          </PrivateRouter>
+        ),
+      },
+      {
+        path: "/about",
+        element: <About></About>,
       },
       {
         path: "/admin-dashboard",
@@ -77,7 +87,7 @@ const router = createBrowserRouter([
         path: "my-bookings",
         element: <UserBooking></UserBooking>,
       },
-      
+
       {
         path: "/failed",
         element: <Failed></Failed>,

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { pic } from "../../assets";
 import { useLoginMutation } from "../../redux/features/authantication/AuthenticationApi";
 import { useState } from "react";
@@ -14,11 +14,19 @@ const Login = () => {
   const [login] = useLoginMutation();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const handleCloseToast = () => {
     setToastMessage(null);
   };
 
+  const handleDemoLogin = () => {
+    setEmail("user@gmail.com");
+    setPassword("123456");
+  };
   const hendelSubmit = async (event: any) => {
     event.preventDefault();
     const form = event.target;
@@ -34,7 +42,7 @@ const Login = () => {
     } else {
       setToastMessage("Login successful ! ");
 
-      navigate("/");
+      navigate(from, { replace: true });
     }
     const user = verifyToken(res.data.token);
 
@@ -49,65 +57,72 @@ const Login = () => {
   };
 
   return (
-    <main className=" md:flex mt-36 justify-center items-center ">
-      {/* Toast Component */}
+    <main className="md:flex mt-36 justify-center items-center">
       {toastMessage && (
         <Toast message={toastMessage} onClose={() => handleCloseToast()} />
       )}
-      {/* sm devise */}
+
       <div className="w-full h-full md:hidden">
         <img className="w-full" src={pic.login} alt="" />
       </div>
-      {/* sm devise */}
-      <div className=" md:ml-20  md:w-3/6 m-auto p-3  ">
-        <form onSubmit={hendelSubmit} className=" font-titlefont">
-          <p className="font-semibold text-2xl"> Login now ! </p>
+
+      <div className="md:ml-20 md:w-3/6 m-auto p-3">
+        <form onSubmit={hendelSubmit} className="font-titlefont">
+          <p className="font-semibold text-2xl">Login now!</p>
           <p className="text-gray-400 font-titlefont mt-2">
-            Doesn,t have an account ?{" "}
+            Don’t have an account?{" "}
             <Link to="/signup">
-              {" "}
-              <small className=" font-titlefont font-bold text-blue-500">
+              <small className="font-titlefont font-bold text-blue-500">
                 Sign-Up
               </small>
             </Link>
           </p>
 
-          <p className=" font-semibold mt-2">Email address : </p>
+          <p className="font-semibold mt-2">Email address:</p>
+          <button
+            type="button"
+            onClick={handleDemoLogin}
+            className=" text-[10px] w-20 bg-gray-300 hover:bg-gray-400 duration-500 p-2 rounded mt-2 text-black font-semibold"
+          >
+            User Demo
+          </button>
           <input
-            className="w-full outline-none border p-1 rounded mt-2 "
+            className="w-full outline-none border p-1 rounded mt-2"
             type="email"
             name="email"
             placeholder="Your email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             required
           />
 
-          <br />
-          <p className=" font-semibold mt-2">Password</p>
+          <p className="font-semibold mt-2">Password:</p>
           <input
-            className="w-full outline-none border p-1 rounded mt-2 "
+            className="w-full outline-none border p-1 rounded mt-2"
             type="password"
             name="password"
-            placeholder="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             required
           />
-          <br />
 
-          <br />
           <input
-            className="w-full bg-blue-700 opacity-80 hover:opacity-100 duration-500 p-2 rounded text-white"
+            className="w-full bg-blue-700 opacity-80 hover:opacity-100 duration-500 p-2 rounded text-white mt-4"
             type="submit"
             value="Login"
           />
-          <br />
+
           <Link to="/signup">
-            <p className="  text-center mt-2 underline text-sm  text-blue-600">
-              create a new account
+            <p className="text-center mt-2 underline text-sm text-blue-600">
+              Create a new account
             </p>
           </Link>
         </form>
       </div>
-      <div className=" md:block hidden ">
-        <img className="" src={pic.login} alt="" />
+
+      <div className="md:block hidden">
+        <img src={pic.login} alt="" />
       </div>
     </main>
   );

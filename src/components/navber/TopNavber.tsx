@@ -99,15 +99,15 @@ const TopNavber = () => {
           <div className="flex md:w-80  gap-4">
             {user?.user?.role === "user" && (
               <div className="relative inline-block text-left">
-                <ul onClick={handleToggle} className=" flex md:gap-6   md:justify-between  items-center ">
-                
-                  <div className=" ">
-                  <Count></Count>
-                  </div>
+                <ul
+                  onClick={handleToggle}
+                  className=" flex md:gap-6   md:justify-between  items-center "
+                >
+                  <div className=" ">{/* <Count></Count> */}</div>
                   <div className="flex gap-1">
                     <p>Profile</p>
-                 <CgProfile className=" text-2xl font-bold"></CgProfile>
-                 </div>
+                    <CgProfile className=" text-2xl font-bold"></CgProfile>
+                  </div>
                 </ul>
 
                 <div

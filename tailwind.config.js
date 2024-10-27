@@ -4,7 +4,6 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        
         bodyfont: ["Poppins", "sans-serif"],
         titlefont: ["Montserrat", "sans-serif"],
       },
@@ -14,7 +13,29 @@ export default {
         boxBg: "linear-gradient(145deg, #1e2024, #23272b)",
         designColor: "#ff014f",
       },
+      scrollbar: {
+        hide: {
+          "&::-webkit-scrollbar": {
+            display: "none",
+          },
+          "&": {
+            "-ms-overflow-style": "none",
+          },
+        },
+      },
     },
   },
-  plugins: [],
+  plugins: [
+    function ({ addUtilities }) {
+      addUtilities({
+        ".hide-scrollbar": {
+          "&::-webkit-scrollbar": {
+            display: "none",
+          },
+          "-ms-overflow-style": "none",
+          "scrollbar-width": "none",
+        },
+      });
+    },
+  ],
 };

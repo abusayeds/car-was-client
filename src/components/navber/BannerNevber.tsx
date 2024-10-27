@@ -27,7 +27,7 @@ const BannerNavber: React.FC = () => {
 
   return (
     <main
-      className={`relative h-[500px] sm:h-screen md:h-screen ml-[-20px] mr-[-20px] md:ml-[-80px] md:mr-[-80px] lg:h-screen bg-cover md:bg-center transition-all duration-1000 ease-out flex items-center`}
+      className={`relative h-[400px] sm:h-screen md::h-[550px]  ml-[-20px] mr-[-20px] md:ml-[-80px] md:mr-[-80px] lg:h-[550px] bg-cover md:bg-center transition-all duration-1000 ease-out flex items-center`}
       style={{
         backgroundImage: `url(${currentImage})`,
       }}
@@ -42,7 +42,10 @@ const BannerNavber: React.FC = () => {
             Car Wash For Your Car's
           </p>
         </div>
-        <Link to ='/servise' className=" font-titlefont uppercase bg-designColor opacity-80 hover:opacity-100 p-4 rounded">
+        <Link
+          to="/servise"
+          className=" font-titlefont uppercase bg-designColor opacity-80 hover:opacity-100 p-4 rounded"
+        >
           Book a Service
         </Link>
       </section>
