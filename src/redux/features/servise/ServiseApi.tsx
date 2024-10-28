@@ -34,10 +34,35 @@ const serviseApi = baseApi.injectEndpoints({
           method: "GET",
         };
       },
-      providesTags : ["slot"]
+      providesTags: ["slot"],
+    }),
+    subServise: builder.query({
+      query: (id) => {
+        return {
+          url: `/all/sub-services/${id}`,
+          method: "GET",
+        };
+      },
+    }),
+    singleSubServise: builder.query({
+      query: (id) => {
+        console.log(id);
+
+        {
+          return {
+            url: `/single-sub-services/${id}`,
+            method: "GET",
+          };
+        }
+      },
     }),
   }),
 });
 
-export const { useServiseQuery, useServiseDetailsQuery, useSlotsQuery } =
-  serviseApi;
+export const {
+  useServiseQuery,
+  useServiseDetailsQuery,
+  useSlotsQuery,
+  useSubServiseQuery,
+  useSingleSubServiseQuery,
+} = serviseApi;

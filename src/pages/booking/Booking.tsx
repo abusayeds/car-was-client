@@ -8,15 +8,21 @@ import { useAppSelector } from "../../redux/hooks";
 
 import Toast from "../../components/ulittls/Toast";
 import { useState } from "react";
-import { useServiseDetailsQuery } from "../../redux/features/servise/ServiseApi";
+import {
+  useServiseDetailsQuery,
+  useSingleSubServiseQuery,
+} from "../../redux/features/servise/ServiseApi";
 import EmpectBookinh from "./EmpectBookinh";
 
 const Booking = () => {
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const { user } = useAppSelector((state) => state.UserDetails);
+
   const { booking } = useAppSelector((state) => state);
+
   const [addBooking] = useAddbookingMutation();
   const { data: service } = useServiseDetailsQuery(booking?.service);
+  const { data: Subservice } = useSingleSubServiseQuery(booking?.subServiceId);
 
   const { data } = useBookingQuery(booking.slotId);
   const handleSubmit = async (event: any) => {
@@ -24,7 +30,9 @@ const Booking = () => {
     const form = event.target;
     const formData = {
       name: form.name.value,
-      phone: Number(form.phone.value),
+      service: booking?.service,
+      Subservice: booking?.subServiceId,
+      phone: form.phone.value,
       email: form.email.value,
       slotId: booking.slotId,
       price: service?.data?.price,
@@ -81,12 +89,8 @@ const Booking = () => {
               <img className="w-full" src={data?.data?.service?.image} alt="" />
               <div className="flex justify-between">
                 <p>
-                  <span className=" text-gray-500 text-xl">$ </span>
-                  <span className="text-xl font-bold">
-                    {data?.data?.service?.price}
-                  </span>
-                  <span className="text-gray-700">
-                    /{data?.data?.service?.name}
+                  <span className=" text-2xl text-gray-700">
+                    {data?.data?.service?.name}
                   </span>
                 </p>
                 <p>{booking.date}</p>
@@ -94,7 +98,21 @@ const Booking = () => {
 
               <p>{data?.data?.service?.description}</p>
             </div>
+            <div className=" flex gap-2 ">
+              <img
+                className=" rounded-md w-28"
+                src={Subservice?.data?.images}
+                alt=""
+              />
+              <div>
+                <p className=" font-bodyfont">
+                  {" "}
+                  {Subservice?.data?.SubServiceName}
+                </p>
 
+                <p> Price : {Subservice?.data?.price} $ </p>
+              </div>
+            </div>
             <div className="border p-2">
               <div className="flex items-center gap-1">
                 <MdTimer className="text-xl"></MdTimer>
@@ -212,7 +230,6 @@ const Booking = () => {
                       </label>
                       <input
                         name="vehicleBrand"
-                        defaultValue="100"
                         placeholder="vehicleBrand"
                         id="vehicleBrand"
                         className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
@@ -220,9 +237,7 @@ const Booking = () => {
                     </div>
                   </div>
                 </div>
-                <p className="mb-3 block text-center text-base font-medium text-[#07074D]">
-                  Address{" "}
-                </p>
+
                 <div className="-mx-3 flex flex-wrap">
                   <div className="w-full px-3 sm:w-1/2">
                     <div className="mb-5">

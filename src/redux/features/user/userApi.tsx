@@ -4,7 +4,7 @@ import { baseApi } from "../../api/baseApi";
 
 const userApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-  singleUser: builder.query({
+    singleUser: builder.query({
       query: (id) => {
         return {
           url: `/single-user/${id}`,
@@ -13,16 +13,16 @@ const userApi = baseApi.injectEndpoints({
       },
       providesTags: ["user"],
     }),
-  UserBookings: builder.query({
+    UserBookings: builder.query({
       query: () => {
         return {
-          url: `my-bookings`,
+          url: `/my-bookings`,
           method: "GET",
         };
       },
-      providesTags: ["user"],
+      providesTags: ["userBooking"],
     }),
   }),
 });
 
-export const {useSingleUserQuery, useUserBookingsQuery} = userApi;
+export const { useSingleUserQuery, useUserBookingsQuery } = userApi;

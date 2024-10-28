@@ -1,20 +1,30 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { Link } from "react-router-dom";
-import { useUserBookingsQuery } from "../../redux/features/user/userApi";
-import { useAppSelector } from "../../redux/hooks";
-import { FaShoppingCart } from "react-icons/fa";
+import {
+  useSingleUserQuery,
+  useUserBookingsQuery,
+} from "../../redux/features/user/userApi";
 
+import { FaShoppingCart } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
+import { useState } from "react";
+import { useDeletebookingMutation } from "../../redux/features/booking/bookingApi";
 const UserBooking = () => {
   const { data: userBookings } = useUserBookingsQuery(undefined, {
-    refetchOnMountOrArgChange: false,
-    refetchOnFocus: false,
-    pollingInterval: 2,
+    refetchOnMountOrArgChange: true,
+    refetchOnReconnect: true,
   });
-  const { user } = useAppSelector((state) => state.UserDetails);
+  const { data: singleUser } = useSingleUserQuery(userBookings?.data[0]?.user);
+  const [showModal, setShowModal] = useState(false);
+  const [deletebooking] = useDeletebookingMutation();
   const shipping = 10;
   let subTotal = 0;
 
+  const confirmDelete = (id: string) => {
+    deletebooking(id);
+    setShowModal(false);
+  };
   if (userBookings?.data) {
     for (const item of userBookings.data) {
       const price = parseFloat(item.price);
@@ -40,10 +50,39 @@ const UserBooking = () => {
                 />
                 <div className="flex w-full flex-col px-4 py-4">
                   <span className="float-right text-gray-400">
-                    {item?.name}
+                    {item?.service?.name}
                   </span>
                   <p className="mt-auto text-lg font-bold">${item?.price}</p>
                 </div>
+                <button
+                  onClick={() => setShowModal(true)}
+                  className=" text-4xl text-designColor  opacity-70  hover:opacity-100 duration-500 mr-6"
+                >
+                  <MdDelete />
+                </button>
+
+                {showModal && (
+                  <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-20">
+                    <div className="bg-white rounded-lg p-6 space-y-4 w-80">
+                      <h2 className="text-lg font-bold">Confirm Deletion</h2>
+                      <p>Are you sure you want to delete this booking?</p>
+                      <div className="flex justify-end space-x-3">
+                        <button
+                          onClick={() => setShowModal(false)}
+                          className="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300"
+                        >
+                          Cancel
+                        </button>
+                        <button
+                          onClick={() => confirmDelete(item._id)}
+                          className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
             ))}
           </div>
@@ -100,19 +139,21 @@ const UserBooking = () => {
             Complete your order by providing your payment details.
           </p>
           <div className="">
+            <label className="mt-4 mb-2 block text-sm font-medium">Name</label>
+            <p>{singleUser?.data?.name}</p>
             <label className="mt-4 mb-2 block text-sm font-medium">Email</label>
-            <p>{user?.user?.userEmail}</p>
-            <label className="mt-4 mb-2 block text-sm font-medium">Email</label>
-            <p>{user?.user?.user?.phone}</p>
+            <p>{singleUser?.data?.email}</p>
+            <label className="mt-4 mb-2 block text-sm font-medium">Phone</label>
+            <p>{singleUser?.data?.phone}</p>
 
             <label className="mt-4 mb-2 block text-sm font-medium">
-              Billing Address
+              Address
             </label>
             <div className="flex flex-col sm:flex-row">
-              <p className="w-full rounded-md  border-gray-200 px-4 py-3 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500">
-                {user?.user?.user?.address}
+              <p className="w-full rounded-md bg-gray-50 px-4 py-3 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500">
+                {singleUser?.data?.address}
               </p>
-              <p className="w-full rounded-md  border-gray-200 px-4 py-3 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500">
+              <p className="w-full rounded-md bg-gray-50 px-4 py-3 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500">
                 city
               </p>
             </div>

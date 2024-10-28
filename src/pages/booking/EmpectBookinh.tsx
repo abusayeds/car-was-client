@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function EmpectBookinh() {
   return (
     <div className="flex flex-col md:flex-row justify-center items-center gap-6 md:p-6 md:bg-gray-50 min-h-screen">

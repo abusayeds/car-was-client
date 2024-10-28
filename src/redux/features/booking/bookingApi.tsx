@@ -9,29 +9,43 @@ const bookingApi = baseApi.injectEndpoints({
           method: "GET",
         };
       },
-      providesTags : ["booking"]
+      providesTags: ["userBooking"],
     }),
     addbooking: builder.mutation({
       query: (data) => {
         return {
           url: `/bookings`,
           method: "POST",
-          body : data
+          body: data,
         };
       },
-      invalidatesTags : ["booking"]
+      invalidatesTags: ["userBooking"],
+    }),
+    deletebooking: builder.mutation({
+      query: (id) => {
+        return {
+          url: `/delete-booking/${id}`,
+          method: "DELETE",
+        };
+      },
+      invalidatesTags: ["userBooking"],
     }),
     updateSlot: builder.mutation({
       query: (args) => {
         return {
           url: `/update-slot/${args.id}`,
           method: "PUT",
-          body : args.data
+          body: args.data,
         };
       },
-      invalidatesTags : ["slot"]
+      invalidatesTags: ["slot"],
     }),
   }),
 });
 
-export const {useBookingQuery, useAddbookingMutation, useUpdateSlotMutation } = bookingApi;
+export const {
+  useBookingQuery,
+  useAddbookingMutation,
+  useUpdateSlotMutation,
+  useDeletebookingMutation,
+} = bookingApi;

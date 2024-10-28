@@ -277,9 +277,6 @@ const Servise = () => {
                     <div className="flex flex-col justify-start px-3 md:pb-0 pb-2 gap-2">
                       <p className="font-bodyfont text-designColor">
                         {item.name} /{" "}
-                        <small className="text-sm text-black font-titlefont">
-                          Price: {item.price} $
-                        </small>
                       </p>
                       <p className="font-titlefont text-sm">
                         Duration Time: {item.duration} minutes

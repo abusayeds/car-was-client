@@ -11,7 +11,6 @@ import { RiAdminLine } from "react-icons/ri";
 import { CgProfile } from "react-icons/cg";
 
 import { FaBarsStaggered } from "react-icons/fa6";
-import Count from "./Count";
 
 const TopNavber = () => {
   const [open, setOpen] = useState(false);
