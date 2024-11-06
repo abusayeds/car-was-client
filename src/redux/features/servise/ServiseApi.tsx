@@ -7,15 +7,25 @@ const serviseApi = baseApi.injectEndpoints({
       query: (args) => {
         const params = new URLSearchParams();
 
-        if (args) {
+        if (args?.data) {
           args?.data?.forEach((item: any) => {
-            params.append(item.name, item.value);
+            params?.append(item?.name, item?.value);
           });
         }
+
         return {
           url: `/services?searchTerm=${args.search}&sort=${args.sort}`,
+
           method: "GET",
           params: params,
+        };
+      },
+    }),
+    paginateAllServise: builder.query({
+      query: () => {
+        return {
+          url: `/services`,
+          method: "GET",
         };
       },
     }),
@@ -39,15 +49,13 @@ const serviseApi = baseApi.injectEndpoints({
     subServise: builder.query({
       query: (id) => {
         return {
-          url: `/all/sub-services/${id}`,
+          url: `/all/sub-services/${id}?`,
           method: "GET",
         };
       },
     }),
     singleSubServise: builder.query({
       query: (id) => {
-        console.log(id);
-
         {
           return {
             url: `/single-sub-services/${id}`,
@@ -65,4 +73,5 @@ export const {
   useSlotsQuery,
   useSubServiseQuery,
   useSingleSubServiseQuery,
+  usePaginateAllServiseQuery,
 } = serviseApi;

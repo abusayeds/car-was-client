@@ -1,14 +1,26 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
-import { useServiseQuery } from "../../redux/features/servise/ServiseApi";
-import { durationfield, pricefield } from "./servise-constant";
+import {
+  usePaginateAllServiseQuery,
+  useServiseQuery,
+} from "../../redux/features/servise/ServiseApi";
+import {
+  durationfield,
+  pricefield,
+  servicePaginateOption,
+} from "./servise-constant";
 import { TfiAngleDown, TfiAngleRight } from "react-icons/tfi";
 import { CiSearch } from "react-icons/ci";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import Paginate from "../../ui/Paginate";
+import { useAppSelector } from "../../redux/hooks";
 
 const Servise = () => {
+  const location = useLocation();
   const [priceOpen, setPriceOpen] = useState(false);
   const [sortOpen, setSortOpen] = useState(false);
+  const { page } = useAppSelector((state) => state.page);
+  const { totalItem } = useAppSelector((state) => state.totalItem);
 
   const [reange, setReange] = useState(() => {
     const savedRengeValue = localStorage.getItem("renge");
@@ -22,6 +34,7 @@ const Servise = () => {
     const savedFilterValue = localStorage.getItem("filterValue");
     return savedFilterValue ? JSON.parse(savedFilterValue) : [];
   });
+
   const [searchValue, setSearchValue] = useState(() => {
     const savedSearchValue = localStorage.getItem("SearchValue");
     return savedSearchValue ? JSON.parse(savedSearchValue) : "";
@@ -35,8 +48,11 @@ const Servise = () => {
     data: filterValue,
     search: searchValue,
     sort: sortValue,
+    page: page,
+    limit: totalItem,
   };
   const { data } = useServiseQuery(args);
+  const { data: paginateLength } = usePaginateAllServiseQuery(args);
 
   const handleFieldChange = (data: any) => {
     setFilterField((prev) =>
@@ -44,19 +60,25 @@ const Servise = () => {
     );
   };
 
+  //   console.log(filterValue);
+
   useEffect(() => {
-    const priceFilterValues = filterField.map((field, index) => ({
+    const priceFilterValues = filterField.map((field) => ({
       name: "price",
       value: field,
-      key: index,
     }));
+    const paginate = [
+      { name: "page", value: page },
+      { name: "limit", value: totalItem },
+    ];
     setFilterValue(priceFilterValues);
-
+    const updatedFilterValues = [...priceFilterValues, ...paginate];
+    setFilterValue(updatedFilterValues);
     localStorage.setItem("filterField", JSON.stringify(filterField));
     localStorage.setItem("filterValue", JSON.stringify(priceFilterValues));
     localStorage.setItem("SearchValue", JSON.stringify(searchValue));
     localStorage.setItem("sortValue", JSON.stringify(sortValue));
-  }, [filterField, searchValue, sortValue]);
+  }, [filterField, searchValue, sortValue, totalItem, page]);
 
   const priceDropdown = () => {
     setPriceOpen(!priceOpen);
@@ -104,10 +126,19 @@ const Servise = () => {
   const serviseId = (id: any) => {
     localStorage.setItem("serviseDetailsId", JSON.stringify(id));
   };
+  useEffect(() => {
+    return () => {
+      localStorage.removeItem("SearchValue");
+      localStorage.removeItem("filterValue");
+      localStorage.removeItem("filterField");
+      localStorage.removeItem("sortValue");
+      localStorage.removeItem("renge");
+    };
+  }, [location]);
 
   return (
     <main className="md:mt-36 mt-20 mb-10 w-full">
-      <section className=" md:flex  gap-8 font-titlefont overflow-hidden">
+      <section className=" md:flex  gap-8 font-titlefont ">
         <section className="md:w-1/3 md:sticky  top-36   ">
           <form className="relative">
             <input
@@ -132,7 +163,7 @@ const Servise = () => {
                 <p>{searchValue}</p>
                 <button
                   onClick={() => setSearchValue("")}
-                  className=" text-designColor font-bold"
+                  className=" text-deleteColor font-bold"
                 >
                   X
                 </button>
@@ -146,7 +177,7 @@ const Servise = () => {
                     localStorage.removeItem("renge");
                     setReange("");
                   }}
-                  className=" text-designColor font-bold"
+                  className="  text-deleteColor font-bold"
                 >
                   X
                 </button>
@@ -166,7 +197,7 @@ const Servise = () => {
             <div
               className={`bg-white shadow-lg grid grid-cols-3 transition-all duration-300 ease-in-out ${
                 priceOpen ? "max-h-screen opacity-100" : "max-h-0 opacity-0"
-              } overflow-hidden`}
+              } overflow-hidden hide-scrollbar`}
             >
               {pricefield?.map((fieldname: any) => (
                 <div className="p-2" key={fieldname.price}>
@@ -197,7 +228,7 @@ const Servise = () => {
             <div
               className={`bg-white shadow-lg text-center flex flex-col transition-all duration-300 ease-in-out ${
                 sortOpen ? "max-h-screen opacity-100" : "max-h-0 opacity-0"
-              } overflow-hidden`}
+              } `}
             >
               <p
                 className="p-2 my-1 hover:bg-slate-300 duration-300 font-titlefont md:text-sm text-xs"
@@ -259,14 +290,14 @@ const Servise = () => {
               </p>
             </div>
           ) : (
-            <section>
-              <p className="text-xl md:text-4xl text-gray-700 pb-10 text-center uppercase font-titlefont">
+            <section className="flex flex-col gap-10">
+              <p className="text-xl md:text-4xl text-gray-700   text-center uppercase font-titlefont">
                 OUR, most popular service
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-3 gap-4">
                 {data?.data?.map((item: any) => (
                   <div
-                    className="border md:h-[350px] md:overflow-y-auto flex flex-col gap-4 relative overflow-hidden group"
+                    className="border md:h-[400px] md:overflow-y-auto flex flex-col gap-4 relative overflow-hidden hide-scrollbar group"
                     key={item._id}
                   >
                     <img
@@ -299,6 +330,11 @@ const Servise = () => {
                   </div>
                 ))}
               </div>
+              <Paginate
+                totalItems={paginateLength?.data?.length}
+                limit={6}
+                options={servicePaginateOption}
+              />
             </section>
           )}
         </section>

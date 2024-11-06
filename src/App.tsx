@@ -9,11 +9,7 @@ function App() {
   const location = useLocation();
 
   const handleScrollColor = () => {
-    if (window.scrollY >= 40) {
-      setScrollColor(true);
-    } else {
-      setScrollColor(false);
-    }
+    setScrollColor(window.scrollY >= 40);
   };
 
   useEffect(() => {
@@ -30,20 +26,20 @@ function App() {
   }, [location]);
 
   return (
-    <main className="text-black">
+    <main className="">
       <section
-        className={`fixed z-50 w-full ${
-          scrollColor || hasContent
-            ? "top-0 bg-white duration-1000"
-            : "md:top-16 transition ease-in-out delay-150 duration-500"
+        className={`fixed top-0 w-full bg-designColor z-50 text-white  ${
+          hasContent ? " " : " "
+        }   py-4  duration-300 ${
+          scrollColor ? " opacity-100 " : " opacity-95 "
         }`}
       >
         <TopNavber />
       </section>
-      <div className="px-5 md:px-20">
+      <div className="md:px-20 px-6">
         <Outlet />
       </div>
-      <Footer></Footer>
+      <Footer />
     </main>
   );
 }

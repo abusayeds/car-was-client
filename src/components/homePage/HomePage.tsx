@@ -1,6 +1,6 @@
 import { IoIosCheckmark } from "react-icons/io";
 import { pic } from "../../assets";
-import BannerNavber from "../navber/BannerNevber";
+
 import { FiPhoneCall } from "react-icons/fi";
 import { FaChevronRight, FaChevronLeft } from "react-icons/fa6";
 import Features from "./Features";
@@ -9,6 +9,7 @@ import { NavLink } from "react-router-dom";
 import AboutSection from "./AboutSection";
 import { useState } from "react";
 import { textOptions } from "./constant";
+import BannerNavber from "../navber/BannerNevber";
 
 const HomePage = () => {
   const [index, setIndex] = useState(0);
@@ -36,7 +37,7 @@ const HomePage = () => {
   };
   return (
     <main>
-      <BannerNavber></BannerNavber>
+      <BannerNavber />
       <AboutSection></AboutSection>
       <section className="md:flex  md:py-20 pt-10 ">
         <div className="md:w-1/2">
@@ -48,27 +49,27 @@ const HomePage = () => {
             <p className="  text-gray-700 font-semibold text-4xl ">
               It’s Time to Come and Clean Your Car
             </p>
-            <p className=" font-titlefont">
+            <p className=" font-bodyfont">
               There are many variations of passages of Lorem Ipsum available,
               but the majority have suffered alteration in some form, by
               injected humour, or randomised words which don't look even.
             </p>
             <div className=" flex flex-col gap-1">
               <li className="flex gap-2 items-center">
-                <IoIosCheckmark className=" bg-teal-400 text-white rounded-s-full"></IoIosCheckmark>
-                <p className=" font-titlefont text-designColor">
+                <IoIosCheckmark className=" bg-designColor text-white rounded-s-full"></IoIosCheckmark>
+                <p className=" text-gray-800 font-titlefont ">
                   We’re professional and certified car washers
                 </p>
               </li>
               <li className="flex gap-2 items-center">
-                <IoIosCheckmark className=" bg-teal-400 text-white rounded-s-full"></IoIosCheckmark>
-                <p className=" font-titlefont text-designColor">
+                <IoIosCheckmark className=" bg-designColor text-white rounded-s-full"></IoIosCheckmark>
+                <p className=" text-gray-800 font-titlefont ">
                   We use quality material to clean your cars
                 </p>
               </li>
               <li className="flex gap-2 items-center">
-                <IoIosCheckmark className=" bg-teal-400 text-white rounded-s-full"></IoIosCheckmark>
-                <p className=" font-titlefont text-designColor">
+                <IoIosCheckmark className=" bg-designColor text-white rounded-s-full"></IoIosCheckmark>
+                <p className=" text-gray-800 font-titlefont ">
                   We care about our customers satisfaction
                 </p>
               </li>
@@ -81,7 +82,7 @@ const HomePage = () => {
                   src={pic.headerlogos}
                   alt=""
                 />
-                <p className="  md:text-lg text-xs text-teal-600">
+                <p className="  md:text-lg text-xs text-designColor">
                   We have 30+ years of experiences for give you better quality
                   results
                 </p>

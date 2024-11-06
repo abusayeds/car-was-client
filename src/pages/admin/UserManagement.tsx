@@ -9,6 +9,8 @@ import Toast from "../../components/ulittls/Toast";
 
 const UserManagement = () => {
   const { data } = useGetAllBookingQuery(undefined);
+  console.log(data);
+
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [role, setRole] = useState<any>(false);
   const [selectedBookingId, setSelectedBookingId] = useState<string | null>(

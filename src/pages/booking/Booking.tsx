@@ -13,19 +13,21 @@ import {
   useSingleSubServiseQuery,
 } from "../../redux/features/servise/ServiseApi";
 import EmpectBookinh from "./EmpectBookinh";
+import { useNavigate } from "react-router-dom";
 
 const Booking = () => {
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const { user } = useAppSelector((state) => state.UserDetails);
-
   const { booking } = useAppSelector((state) => state);
-
   const [addBooking] = useAddbookingMutation();
   const { data: service } = useServiseDetailsQuery(booking?.service);
   const { data: Subservice } = useSingleSubServiseQuery(booking?.subServiceId);
-
   const { data } = useBookingQuery(booking.slotId);
+  const navigate = useNavigate();
   const handleSubmit = async (event: any) => {
+    if (!user) {
+      navigate("/login", { state: { from: "/booking" } });
+    }
     event.preventDefault();
     const form = event.target;
     const formData = {
@@ -49,7 +51,6 @@ const Booking = () => {
 
     try {
       const res: any = await addBooking(formData);
-      //   console.log(res?.data.data?.verifyPaymentMethod?.pay_status);
 
       if (res.error) {
         setToastMessage(res.error.data.errorSources[0].message);
@@ -275,7 +276,7 @@ const Booking = () => {
                       booking.slotId === ""
                         ? "opacity-40 cursor-not-allowed"
                         : "opacity-90 hover:opacity-100"
-                    } bg-[#6A64F1] py-3 px-8 text-center text-base font-semibold text-white outline-none`}
+                    } bg-designColor py-3 px-8 text-center text-base font-semibold text-white outline-none`}
                   >
                     <span>Pay Now</span>
                   </button>

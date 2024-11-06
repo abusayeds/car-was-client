@@ -155,7 +155,7 @@ const ServiseDetails = () => {
                   <td className=" md:text-sm text-xs py-2 sm:px-4 sm:py-4">
                     <button
                       type="button"
-                      className={`bg-blue-600 rounded  p-2 md:w-28  text-center  text-white ${
+                      className={`bg-designColor rounded  p-2 md:w-28  text-center  text-white ${
                         slot.isBooked === "booked" &&
                         "opacity-40 cursor-not-allowed hidden "
                       } ${
@@ -198,7 +198,9 @@ const ServiseDetails = () => {
             {subService?.data?.map((subService: any, index: any) => (
               <div
                 className={`bg-slate-100 p-5 text-start flex flex-col md:justify-start justify-center md:items-start items-center gap-4 ${
-                  selectedIndex === index ? "border-2 border-blue-600" : ""
+                  selectedIndex === index
+                    ? "border rounded border-designColor"
+                    : ""
                 }`}
                 key={index}
               >
@@ -212,8 +214,10 @@ const ServiseDetails = () => {
                 </p>
                 <p>Price: {subService.price}</p>
                 <button
-                  className={`rounded-md text-white w-full p-1 ${
-                    selectedIndex === index ? "bg-green-600" : "bg-blue-600"
+                  className={`rounded-md text-white w-full bg-opacity-80 hover:bg-opacity-100 duration-500 p-1 ${
+                    selectedIndex === index
+                      ? "bg-designColor "
+                      : "bg-designColor bg-opacity-80"
                   }`}
                   onClick={() => handleSelect(index, subService._id)}
                 >
@@ -229,13 +233,13 @@ const ServiseDetails = () => {
               <div className=" flex gap-4 ">
                 <button
                   onClick={() => dispatch(booking(bookingData))}
-                  className=" text-white rounded bg-blue-600 px-6 py-2 opacity-80 hover:opacity-100 duration-500"
+                  className=" text-white  rounded bg-designColor px-6 py-2 bg-opacity-80  hover:bg-opacity-100 duration-500"
                 >
                   <Link to="/booking"> Book This Service</Link>
                 </button>
                 <button
                   onClick={() => setSelectedIndex(null)}
-                  className=" rounded bg-designColor text-white px-6 py-2 opacity-80 hover:opacity-100 duration-500"
+                  className=" rounded  bg-deleteColor text-white px-6 py-2 opacity-80 hover:opacity-100 duration-500"
                 >
                   Close
                 </button>

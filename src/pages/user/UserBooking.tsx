@@ -27,7 +27,7 @@ const UserBooking = () => {
   };
   if (userBookings?.data) {
     for (const item of userBookings.data) {
-      const price = parseFloat(item.price);
+      const price = parseFloat(item?.Subservice?.price);
       subTotal += price;
     }
   }
@@ -52,11 +52,13 @@ const UserBooking = () => {
                   <span className="float-right text-gray-400">
                     {item?.service?.name}
                   </span>
-                  <p className="mt-auto text-lg font-bold">${item?.price}</p>
+                  <p className="mt-auto text-lg font-bold">
+                    ${item?.Subservice?.price}
+                  </p>
                 </div>
                 <button
                   onClick={() => setShowModal(true)}
-                  className=" text-4xl text-designColor  opacity-70  hover:opacity-100 duration-500 mr-6"
+                  className=" text-4xl text-deleteColor  opacity-70  hover:opacity-100 duration-500 mr-6"
                 >
                   <MdDelete />
                 </button>

@@ -28,11 +28,11 @@ const Toast = ({ message, duration = 3000, onClose }: ToastProps) => {
     <div
       className={`fixed top-[-10px] left-1/2 transform -translate-x-1/2 p-4 rounded shadow-lg z-50 transition-all duration-300 ${
         message ? "top-[10px]" : "top-[-80px]"
-      } bg-blue-500 w-auto text-white flex items-center`}
+      }  bg-white w-auto   text-black flex items-center`}
     >
       <p className=" text-lg">{message}</p>
       <div
-        className="h-1 bg-designColor mt-2 absolute bottom-0 left-0"
+        className="h-1  bg-deleteColor mt-2 absolute bottom-0 left-0"
         style={{
           width: width,
           transition: `width ${duration}ms linear`,
@@ -45,7 +45,7 @@ const Toast = ({ message, duration = 3000, onClose }: ToastProps) => {
 export default Toast;
 
 //  <div className=" md:w-3/6 w-full bg-gray-50 md:p-6 p-1">
-     
+
 //         <div>
 //           <h3 className="text-xl font-semibold mb-4 up">Write your review</h3>
 
@@ -82,4 +82,4 @@ export default Toast;
 //             Submit Review
 //           </button>
 //         </div>
-//       </div> 
+//       </div>

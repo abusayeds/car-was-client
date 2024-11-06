@@ -38,7 +38,17 @@ const ServiseManagement = () => {
 
   return (
     <div className="relative flex flex-col font-titlefont   overflow-scroll text-gray-700 bg-white shadow-md rounded-lg bg-clip-border">
-      <p className="  text-lg py-4">Service Management</p>
+      <div className=" flex justify-between px-4">
+        <p className=" text-xs  md:text-lg py-4">Service Management</p>
+        <th className="p-4">
+          <button
+            onClick={() => setOpenServiceModel(true)}
+            className="md:text-lg text-sm leading-none font-normal  bg-designColor opacity-90 hover:opacity-100 text-white px-6 py-1 rounded"
+          >
+            Add service
+          </button>
+        </th>
+      </div>
       <AddServiseModal
         data={ServiceModaldata}
         onClose={hendleServiseModelClose}
@@ -74,14 +84,6 @@ const ServiseManagement = () => {
                 Update
               </p>
             </th>
-            <th className="p-4">
-              <button
-                onClick={() => setOpenServiceModel(true)}
-                className="md:text-lg text-sm leading-none font-normal bg-green-600 opacity-90 hover:opacity-100 text-white px-6 py-1 rounded"
-              >
-                Add new service
-              </button>
-            </th>
           </tr>
         </thead>
         <tbody>
@@ -103,7 +105,7 @@ const ServiseManagement = () => {
                     setOpenUpdateServiceModel(true);
                     setUpdateModelData(service);
                   }}
-                  className=" bg-blue-600 px-8 rounded text-white opacity-80 hover:opacity-100 duration-500 py-1"
+                  className=" bg-designColor px-8 rounded text-white opacity-80 hover:opacity-100 duration-500 py-1"
                 >
                   Edit
                 </button>
@@ -112,7 +114,7 @@ const ServiseManagement = () => {
                     setOpenDeleteServiceModel(true);
                     setDeleteModelId(service._id);
                   }}
-                  className=" ml-4 bg-designColor px-8 rounded text-white opacity-80 hover:opacity-100 duration-500 py-1"
+                  className=" ml-4 bg-deleteColor px-8 rounded text-white opacity-80 hover:opacity-100 duration-500 py-1"
                 >
                   Delete
                 </button>

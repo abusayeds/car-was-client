@@ -18,6 +18,11 @@ import AccountInfo from "../pages/user/AccountInfo";
 import UserBooking from "../pages/user/UserBooking";
 import About from "../pages/about/About";
 import PrivateRouter from "./PrivateRoute";
+import ProfileUpdate from "../pages/user/ProfileUpdate";
+import UserReview from "../pages/user/UserReview";
+import ChangePassword from "../pages/user/ChangePassword";
+import UserInfo from "../pages/user/UserInfo";
+import ReviewManagement from "../pages/admin/ReviewManagement";
 
 const router = createBrowserRouter([
   {
@@ -52,9 +57,9 @@ const router = createBrowserRouter([
       {
         path: "/booking",
         element: (
-          <PrivateRouter>
-            <Booking></Booking>
-          </PrivateRouter>
+          //   <PrivateRouter>
+          <Booking></Booking>
+          //   </PrivateRouter>
         ),
       },
       {
@@ -77,15 +82,41 @@ const router = createBrowserRouter([
             path: "slot-management",
             element: <SlotManagement></SlotManagement>,
           },
+          {
+            path: "review-management",
+            element: <ReviewManagement />,
+          },
         ],
       },
       {
-        path: "userinfo",
+        path: "/user-dashboard",
         element: <AccountInfo></AccountInfo>,
+        children: [
+          {
+            path: "",
+            element: <UserInfo />,
+          },
+          {
+            path: "profile-update",
+            element: <ProfileUpdate />,
+          },
+          {
+            path: "user-review",
+            element: <UserReview />,
+          },
+          {
+            path: "change-password",
+            element: <ChangePassword />,
+          },
+        ],
       },
       {
         path: "my-bookings",
-        element: <UserBooking></UserBooking>,
+        element: (
+          <PrivateRouter>
+            <UserBooking></UserBooking>
+          </PrivateRouter>
+        ),
       },
 
       {

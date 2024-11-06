@@ -18,7 +18,7 @@ export default function EmpectBookinh() {
             Looks likes you haven't made your choice yet
           </p>
           <div className="flex gap-4">
-            <button className="bg-teal-400 text-white rounded-full px-4 py-2">
+            <button className="bg-designColor text-white rounded-full px-4 py-2">
               Back Home
             </button>
           </div>
@@ -41,7 +41,7 @@ export default function EmpectBookinh() {
           <p className="text-center text-gray-500 text-sm mb-4">
             Please select a servise
           </p>
-          <button className="bg-teal-400 text-white rounded-full px-6 py-2">
+          <button className="bg-designColor text-white rounded-full px-6 py-2">
             Select Service
           </button>
         </div>
@@ -63,7 +63,7 @@ export default function EmpectBookinh() {
           <p className="text-center text-gray-500 text-sm mb-4">
             Your booking is empty . Add something from the service
           </p>
-          <button className="bg-teal-400 text-white rounded-full px-6 py-2">
+          <button className="bg-designColor text-white rounded-full px-6 py-2">
             Go back
           </button>
         </div>

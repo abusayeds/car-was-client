@@ -4,66 +4,60 @@ import { IoIosArrowForward } from "react-icons/io";
 
 import { BsGithub } from "react-icons/bs";
 import { NavLink } from "react-router-dom";
-import { useEffect, useRef, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { setFooterActive } from "../../redux/features/footer/Footer-slice";
 
 const Footer = () => {
-  const footerRef = useRef<HTMLDivElement | null>(null);
-  const dispatch = useAppDispatch();
-  const isActive = useAppSelector((state) => state.footer.isActive);
+  //   const footerRef = useRef<HTMLDivElement | null>(null);
+  //   const dispatch = useAppDispatch();
+  //   const isActive = useAppSelector((state) => state.footer.isActive);
 
-  // Initialize state with Redux value
-  const [isFooterVisible, setIsFooterVisible] = useState(isActive);
+  //   // Initialize state with Redux value
+  //   const [isFooterVisible, setIsFooterVisible] = useState(isActive);
 
-  useEffect(() => {
-    const storedValue = localStorage.getItem("footer|Active");
-    if (storedValue) {
-      const isVisible = storedValue === "true";
-      setIsFooterVisible(isVisible);
-      dispatch(setFooterActive(isVisible));
-    }
-  }, [dispatch]);
+  //   useEffect(() => {
+  //     const storedValue = localStorage.getItem("footer|Active");
+  //     if (storedValue) {
+  //       const isVisible = storedValue === "true";
+  //       setIsFooterVisible(isVisible);
+  //       dispatch(setFooterActive(isVisible));
+  //     }
+  //   }, [dispatch]);
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          const isVisible = entry.isIntersecting;
-          setIsFooterVisible(isVisible);
-          dispatch(setFooterActive(isVisible));
-        });
-      },
-      {
-        root: null,
-        threshold: 0.2,
-      }
-    );
+  //   useEffect(() => {
+  //     const observer = new IntersectionObserver(
+  //       (entries) => {
+  //         entries.forEach((entry) => {
+  //           const isVisible = entry.isIntersecting;
+  //           setIsFooterVisible(isVisible);
+  //           dispatch(setFooterActive(isVisible));
+  //         });
+  //       },
+  //       {
+  //         root: null,
+  //         threshold: 0.2,
+  //       }
+  //     );
 
-    if (footerRef.current) {
-      observer.observe(footerRef.current);
-    }
+  //     if (footerRef.current) {
+  //       observer.observe(footerRef.current);
+  //     }
 
-    return () => {
-      if (footerRef.current) {
-        observer.unobserve(footerRef.current);
-      }
-    };
-  }, [dispatch]);
+  //     return () => {
+  //       if (footerRef.current) {
+  //         observer.unobserve(footerRef.current);
+  //       }
+  //     };
+  //   }, [dispatch]);
 
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      localStorage.setItem("footer|Active", isFooterVisible ? "true" : "false");
-    }, 100);
+  //   useEffect(() => {
+  //     const timeoutId = setTimeout(() => {
+  //       localStorage.setItem("footer|Active", isFooterVisible ? "true" : "false");
+  //     }, 100);
 
-    return () => clearTimeout(timeoutId);
-  }, [isFooterVisible]);
+  //     return () => clearTimeout(timeoutId);
+  //   }, [isFooterVisible]);
 
   return (
-    <main
-      ref={footerRef}
-      className=" bg-black opacity-90  font-titlefont md:px-16 p-6 text-gray-400 tracking-wide py-10"
-    >
+    <main className=" bg-black opacity-90  font-titlefont md:px-16 p-6 text-gray-400 tracking-wide py-10">
       <div className="max-w-7xl mx-auto">
         <div className=" w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 ">
           <div className="mb-5 flex flex-col gap-4  ">

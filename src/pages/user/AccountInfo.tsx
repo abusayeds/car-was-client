@@ -1,108 +1,187 @@
-import { useAppSelector } from "../../redux/hooks";
-import ProfileUpdateModel from "./ProfileUpdateModel";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { useState } from "react";
-import { useSingleUserQuery } from "../../redux/features/user/userApi";
+import { FaCamera } from "react-icons/fa";
+import { useAppSelector } from "../../redux/hooks";
 import { CiLocationOn } from "react-icons/ci";
+import { Link, Outlet } from "react-router-dom";
+import { useSingleUserQuery } from "../../redux/features/user/userApi";
+import { uploadImageToImgBB } from "../../utils/ImageUpload";
+import { useUpdateuserMutation } from "../../redux/features/admin/adminApi";
+import Toast from "../../components/ulittls/Toast";
 
 const AccountInfo = () => {
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
   const { user } = useAppSelector((state) => state.UserDetails);
 
   const { data: singleUser } = useSingleUserQuery(user?.user?.id);
-  const [editUser, setEditUser] = useState(false);
-  const [AccInfo, setAccInfo] = useState(true);
-  const data = {
-    singleUser,
+
+  const [coverImgLoading, setCoverImgLoading] = useState(false);
+  const [ProfileImgLoading, setProfileImgLoading] = useState(false);
+  const [updateUser] = useUpdateuserMutation();
+  const changeProfileImg = async (profileImage: any) => {
+    if (!profileImage) return;
+    setProfileImgLoading(true);
+    const imgURL = await uploadImageToImgBB(profileImage);
+    const formdata = {
+      profileImage: imgURL,
+    };
+    const args = {
+      id: singleUser?.data?._id,
+      data: formdata,
+    };
+    if (imgURL) {
+      updateUser(args);
+      setToastMessage("Image Update Successfully");
+      setProfileImgLoading(false);
+    } else {
+      setProfileImgLoading(false);
+      setToastMessage("Something went wrong");
+    }
   };
-
+  const changeCoverImg = async (coverImage: any) => {
+    setCoverImgLoading(true);
+    const imgURL = await uploadImageToImgBB(coverImage);
+    const formdata = {
+      coverImage: imgURL,
+    };
+    const args = {
+      id: singleUser?.data?._id,
+      data: formdata,
+    };
+    if (imgURL) {
+      updateUser(args);
+      setToastMessage("Image Update Successfully");
+      setCoverImgLoading(false);
+    } else {
+      setCoverImgLoading(false);
+      setToastMessage("Something went wrong");
+    }
+  };
+  const handleCloseToast = () => {
+    setToastMessage(null);
+  };
   return (
-    <main className="md:my-40 my-20 w-[90%] mx-auto">
-      <section className=" md:flex gap-10 border-b py-4 font-titlefont ">
-        <div className="md:w-1/5">
-          <img
-            className="object-cover object-top"
-            src="https://images.unsplash.com/photo-1549880338-65ddcdfd017b?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjE0NTg5fQ"
-            alt="Mountain"
-          />
+    <div className="min-h-screen my-20  flex justify-center items-center md:p-4">
+      {toastMessage && (
+        <Toast message={toastMessage} onClose={() => handleCloseToast()} />
+      )}
+      <div className="bg-white rounded-lg shadow-md w-full max-w-3xl">
+        <div className="bg-white rounded-lg shadow-md w-full max-w-3xl">
+          <p
+            className={` ${
+              coverImgLoading ? "block" : "hidden"
+            } text-center h-44 text-black text-4xl `}
+          >
+            Image uploading ...
+          </p>
+          <div
+            className={` ${
+              coverImgLoading ? "hidden" : "block"
+            } relative h-44 bg-cover bg-center rounded-t-lg cursor-pointer`}
+            style={{
+              backgroundImage: `url(${
+                singleUser?.data?.coverImage ||
+                "https://upload.wikimedia.org/wikipedia/commons/7/75/No_image_available.png"
+              })`,
+            }}
+            onClick={() => {
+              const coverImageInput =
+                document.getElementById("coverImageInput");
+              if (coverImageInput) {
+                coverImageInput.click();
+              }
+            }}
+          >
+            <button
+              type="button"
+              className="absolute top-4 right-4 bg-white p-2 rounded-full shadow-md"
+            >
+              <FaCamera className="text-blue-600" />
+            </button>
+            <input
+              id="coverImageInput"
+              type="file"
+              accept="image/*"
+              className="absolute top-4 right-4"
+              onChange={(e) => {
+                changeCoverImg(e.target.files?.[0] || null);
+              }}
+              style={{ display: "none" }}
+            />
+          </div>
         </div>
-        <div className=" flex  flex-col justify-between md:mt-0 mt-4 ">
-          <div className=" flex  flex-col gap-4 ">
-            <h2 className="font-semibold">{singleUser?.data?.name}</h2>
-            <ul className=" flex gap-2">
-              <CiLocationOn />
-              <p className=" text-xs  font-titlefont">
-                {" "}
-                {singleUser?.data?.address}
-              </p>
-            </ul>
 
-            <div className="">
-              Active now
-              <small className="bg-green-700 ml-3  px-2   rounded-full animate-pulse"></small>
-            </div>
-          </div>
-          <div className=" flex justify-around gap-4 md:mt-0 mt-4  ">
-            <button
-              onClick={() => {
-                setEditUser(true);
-                setAccInfo(false);
-              }}
-              className=" md:text-sm  text-[10px] md:px-3  px-2 block mx-auto rounded-full bg-gray-900 opacity-90 hover:opacity-100 duration-500 hover:shadow-lg font-semibold text-white py-1"
+        <div className="p-6 -mt-20 flex flex-col items-center">
+          <div
+            onClick={() => {
+              const profileImageInput =
+                document.getElementById("profileImageInput");
+              if (profileImageInput) {
+                profileImageInput.click();
+              }
+            }}
+            className="relative w-28 h-28 bg-white rounded-full"
+          >
+            <p
+              className={` ${
+                ProfileImgLoading ? "block" : "hidden"
+              } text-center  text-black  mt-10 `}
             >
-              Edit profile
+              Uploading
+            </p>
+            <img
+              src={
+                singleUser?.data?.profileImage ||
+                "https://via.placeholder.com/80"
+              }
+              alt="Profile"
+              className={` ${
+                ProfileImgLoading ? "hidden" : "block"
+              } h-full w-full  rounded-full border-4 border-gray-200`}
+            />
+            <button className="absolute bottom-4 right-0 bg-white p-1 rounded-full shadow-md">
+              <FaCamera className="text-blue-600" />
             </button>
-            <button
-              onClick={() => {
-                setEditUser(false);
-                setAccInfo(true);
+            <input
+              id="profileImageInput"
+              type="file"
+              accept="image/*"
+              className="absolute top-4 right-4"
+              onChange={(e) => {
+                changeProfileImg(e.target.files?.[0] || null);
               }}
-              className=" md:text-sm  text-[10px] md:px-3  px-2 block mx-auto rounded-full bg-gray-900 opacity-90 hover:opacity-100 duration-500 hover:shadow-lg font-semibold text-white py-1"
-            >
-              Your Info
-            </button>
-            {/* <button
-              //   onClick={() => setOpenProfileUpdateModel(true)}
-              className=" md:text-sm  text-[10px] md:px-3  px-2 block mx-auto rounded-full bg-gray-900 opacity-90 hover:opacity-100 duration-500 hover:shadow-lg font-semibold text-white py-1"
-            >
-              Your booking
-            </button> */}
+              style={{ display: "none" }}
+            />
           </div>
+          <h2 className="text-xl font-semibold mt-4">
+            {singleUser?.data?.name || "Guest"}
+            <small
+              className="bg-green-700 h-4 rounded-full animate-pulse"
+              aria-label="Online status"
+            ></small>
+          </h2>
+          <ul className="mt-2 flex gap-2">
+            <CiLocationOn />
+            <p className="text-xs font-titlefont">
+              {singleUser?.data?.address}
+            </p>
+          </ul>
         </div>
-      </section>
-      <section className=" font-titlefont mt-4  md:flex gap-10 md:mt-0 ">
-        <div className="md:w-1/4 md:flex hidden flex-col gap-4 ">
-          <p className=" font-bold">Active importents</p>
-          <p>
-            Learn why calculating daily, weekly, and monthly active users is
-            important in measuring app and campaign success.
-          </p>
-          <p>
-            <span className=" font-bold text-lg">Help</span>{" "}
-            <small className=" text-gray-500">
-              to give assistance or support to (someone)
-            </small>
-          </p>
+
+        <div className="p-4 flex justify-between text-center border-t border-b md:ext-lg text-xs border-gray-200">
+          <Link to="/user-dashboard">Your informatin</Link>
+          <Link to="/user-dashboard/profile-update">Edit profile </Link>
+          <Link to="/user-dashboard/user-review">Your Review</Link>
+          <Link to="/user-dashboard/change-password">Change password</Link>
         </div>
-        <div className=" w-full  ">
-          {editUser && <ProfileUpdateModel data={data}></ProfileUpdateModel>}
-          {AccInfo && (
-            <section className=" flex flex-col gap-6 mt-4">
-              <ul className=" flex flex-col gap-3">
-                <p>Phone : </p>
-                <p>{singleUser?.data?.phone}</p>
-              </ul>
-              <ul className=" flex flex-col gap-3">
-                <p>Adress : </p>
-                <p>{singleUser?.data?.email}</p>
-              </ul>
-              <ul className=" flex flex-col gap-3">
-                <p>E-mail : </p>
-                <p>{singleUser?.data?.address}</p>
-              </ul>
-            </section>
-          )}
+
+        {/* Account Settings Form */}
+        <div className="p-6">
+          <Outlet></Outlet>
         </div>
-      </section>
-    </main>
+      </div>
+    </div>
   );
 };
 
